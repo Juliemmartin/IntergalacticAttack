@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run IntergalacticAttack (JavaFX)",
+      "request": "launch",
+      "mainClass": "IntergalacticAttack",
+      "projectName": "IntergalacticAttack",
+      "vmArgs": "--module-path C:/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.media,javafx.swing"
+    },
+    {
+      "type": "java",
+      "name": "Debug IntergalacticAttack (JavaFX)",
+      "request": "launch",
+      "mainClass": "IntergalacticAttack",
+      "projectName": "IntergalacticAttack",
+      "vmArgs": "--module-path C:/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.media,javafx.swing",
+      "console": "integratedTerminal"
+    }
+  ]
+}
