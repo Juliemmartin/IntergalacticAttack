@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ButtonBar;
+
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -27,8 +28,10 @@ public class IntergalacticAttack extends Application {
 
     private static final double PLAYER_WIDTH = 60;
     private static final double PLAYER_HEIGHT = 60;
+
     private static final double ENEMY_WIDTH = 50;
     private static final double ENEMY_HEIGHT = 50;
+
     private static final double PROJECTILE_WIDTH = 10;
     private static final double PROJECTILE_HEIGHT = 20;
 
@@ -36,22 +39,24 @@ public class IntergalacticAttack extends Application {
     private boolean gameOver = false;
     private double invulnTimer = 1.0;
 
-    private Image startImg; // start screen image
+    private Image startImg; //start screen 
     private Image playerImg;
     private double playerX, playerY;
     private final double playerSpeed = 300;
+
     private boolean shootingCooldown = false;
     private long lastShot = 0;
     private double player2X, player2Y;
     private boolean shootingCooldown2 = false;
     private long lastShot2 = 0;
-    private int gameMode = 1; // 1 = single player, 2 = two player
+    private int gameMode = 1; 
 
     private Image enemyImg1;
     private Image enemyImg2;
     private int spawnCount = 0;
 
     private final List<Enemy> enemies = new ArrayList<>();
+
     private double enemySpawnTimer = -1.0;
     private final double enemySpawnInterval = 0.5;
 
@@ -81,29 +86,35 @@ public class IntergalacticAttack extends Application {
 
         //load other assets
         try {
+
             playerImg = new Image(new File("playerRocket.png").toURI().toString());
             enemyImg1 = new Image(new File("enemyRocket.png").toURI().toString());
             enemyImg2 = new Image(new File("enemyRocket2.png").toURI().toString());
             Media music = new Media(new File("background.mp3").toURI().toString());
+
             bgm = new MediaPlayer(music);
             bgm.setCycleCount(MediaPlayer.INDEFINITE);
             bgm.setVolume(0.3);
             bgm.setOnReady(() -> bgm.play());
+
         } catch (Exception e) {
             System.out.println("Asset load warning: " + e.getMessage());
         }
 
         Canvas canvas = new Canvas(800, 600);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         playerX = 400 - PLAYER_WIDTH / 2;
-        playerY = 600 - 80;
+        playerY = 600 - 80 ;
         player2X = 400 + PLAYER_WIDTH;
         player2Y = 600 - 80;
+
         shootingCooldown2 = false;
         lastShot2 = 0;
 
         Group root = new Group(canvas);
+
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(e -> {
             pressed.add(e.getCode());
@@ -126,6 +137,7 @@ public class IntergalacticAttack extends Application {
         lastNanoTime = System.nanoTime();
 
         new AnimationTimer() {
+
             @Override
             public void handle(long now) {
                 double delta = (now - lastNanoTime) / 1_000_000_000.0;
@@ -133,10 +145,13 @@ public class IntergalacticAttack extends Application {
                 update(delta);
                 render(gc);
             }
+
         }.start();
+    
     }
 
     private void selectGameMode(Stage stage) {
+
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Select Players");
 
@@ -144,6 +159,7 @@ public class IntergalacticAttack extends Application {
         pane.setStyle("-fx-background-color: limegreen;");
 
         TextArea instructions = new TextArea(
+
             "Controls:\n\n" +
             "1 Player:\n" +
             "  - Move: W A S D\n" +
@@ -169,9 +185,12 @@ public class IntergalacticAttack extends Application {
         pane.setContent(content);
 
         Optional<ButtonType> result = dialog.showAndWait();
+
         if (result.isPresent() && result.get() == onePlayer) {
+
             gameMode = 1;
             stage.setTitle("Intergalactic Attack - 1 Player");
+
         } else {
             gameMode = 2;
             stage.setTitle("Intergalactic Attack - 2 Player");
@@ -182,6 +201,7 @@ public class IntergalacticAttack extends Application {
     }
     //Restart
     private void restart() {
+
         score = 0;
         enemies.clear();
         projectiles.clear();
@@ -201,6 +221,7 @@ public class IntergalacticAttack extends Application {
         spawnCount = 0;
         rapidFire = false;
         rapidFireTimer = 0;
+
     }
 
     private void update(double dt) {
@@ -219,6 +240,7 @@ public class IntergalacticAttack extends Application {
 
         //Player 1 shoot
         if (pressed.contains(KeyCode.SPACE)) {
+
             long interval = rapidFire ? 100 : 300;
             if (!shootingCooldown || (System.currentTimeMillis() - lastShot) > interval) {
                 double shotX = playerX + PLAYER_WIDTH / 2 - PROJECTILE_WIDTH / 2;
@@ -491,7 +513,7 @@ public class IntergalacticAttack extends Application {
             gc.fillText("P", x + 6, y + 15);
         }
     }
-
+//Run Main
     public static void main(String[] args) {
         launch(args);
     }

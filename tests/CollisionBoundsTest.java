@@ -7,7 +7,7 @@ public class CollisionBoundsTest {
     }
 
     static void testProjectileEnemyCollision() {
-        //Simulate both at the same location so they collide quickly
+        //Simulate both at the same location for collsion
         Projectile proj = new Projectile(new Vec2(100, 100));
         Enemy enemy = new Enemy(new Vec2(100, 100));
 
@@ -30,7 +30,7 @@ public class CollisionBoundsTest {
         }
     }
 
-    // Minimal stub implementations matching expected interface
+    //Minimal stub implementations matching expected interface
     static class Projectile {
         private Vec2 pos;
         private boolean active = true;

@@ -1,4 +1,4 @@
-// Axis-aligned bounding box with basic overlap and validity checks
+//Axis-aligned bounding box with overlap and checks
 public class AABB {
     private final double x, y, w, h;
 
